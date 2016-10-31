@@ -1,0 +1,29 @@
+md -j1
+md -j2
+dir
+cd -j1
+md -j1
+md -j2
+cd..
+tree
+dir j*.*
+rd -j1
+rd -j2
+dir
+
+mk -t-2000;   
+del -t
+mk -t-2789;   //±ß½ç
+del -t
+mk -t-4242
+del -t
+mk -t-18098  
+del -t
+mk -t-24283  //±ß½ç
+del -t
+
+
+mk -t-6787   
+del -t
+mk -t-22890
+del -t

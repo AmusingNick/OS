@@ -1,0 +1,27 @@
+class FreeStack
+{
+	int size;
+	ArrayDeque<DiskBlock> stack;
+}
+class DiskBlock
+{
+	int node;
+	FreeStack nextFs;
+	public DiskBlock(int node, FreeStack nextFs) {
+		super();
+		this.node = node;
+		this.nextFs = nextFs;
+	}
+}
+
+public class test {
+	public static void main(String[] args) {
+		FreeStack fs100 = new FreeStack();
+		fs100.size = 100;
+		fs100.stack = new ArrayDeque(100);
+		for(int i=0;i<100;i++){
+			DiskBlock dbi = new DiskBlock(i,new FreeStack());
+			fs100.stack.offer(dbi);
+		}
+	}
+}

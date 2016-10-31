@@ -1,0 +1,73 @@
+主要流程:
+初始化:创建该文件时应创建初始的根目录内容,多级混合索引表(索引节点表),成组链接表(空闲盘块)。
+默认C:\\Users\\hongyu\\Desktop\\>为根目录
+文件目录项（采用FCB）应包括类型（目录 or文件）、创建日期、大小、第一个磁盘块块号
+显示命令提示符“$”，并根据输入命令完成相应的文件操作：
+MD（创建子目录）：创建目录文件，并在父目录文件中增加目录项。
+CD（切换工作目录）：根据当前目录切换到指定目录。
+RD（删除子目录）：搜索所要删除的目录是否为空目录，若是则删除。
+DIR：列出当前目录的所有目录项。
+TREE：根据磁盘文件和目录按着树形结构加以显示。
+
+MK（创建空文件）：创建指定大小的文件（如输入命令 “mk  test  2000”，表示创建大小为2000字节的test文件），并在父目录中添加文件名称;
+从成组链接表中找到空闲块,将其块号写入到混合索引表(为用户分配文件所需盘块).
+DEL（删除文件）：如果所要删除的文件存在，则删除;
+修改混合索引表,回收空闲盘块
+
+数据结构:
+文件控制块:
+class FCB
+{
+ String name;
+ int size;			//大小
+ int firstBlock;		//第一块块号
+ char type;			//类型，1为文件，2为目录，0为已删除目录项 
+ date datetime;	 		//日期时间，格式为yyyymmdd hhmmss
+ FCB f;  			//树形结构时指向的下一个fcb
+}
+ArrayList<FCB> alFCB = new ArrayList<>();    //一条链代表的是一个当前目录.
+
+多级混合索引表(索引节点表):  (假定5个直接地址项,1个一次间接寻址项,1个二次间接寻址项,1个三次间接寻址项)
+/*class DiskiNode  //磁盘索引节点    (书上233页给的挺全){}
+class RAMiNode  //内存索引节点{}*/
+class Index
+{
+ int date;
+ Index i;     			
+}
+class singleIndirect 
+{
+ ArrayList<Index> indexFill = new ArrayList<>();
+}
+class doubleIndirect
+{
+ ArrayList<singleIndirect> als = new ArrayList<>();
+}
+class tripleIndirect
+{
+ ArrayList<doubleIndex>  ald = new ArrayList<>();
+}
+class Inode
+{
+ int iaddr0;
+ int iaddr1;
+ int iaddr2;
+ int iaddr3;
+ int iaddr4;
+ singleIndirect sl;
+ doubleIndirect dl;
+ tripleIndirect tl;
+}
+
+
+成组链接表(空闲盘块):
+class FreeStack
+{
+	int size;
+	ArrayDeque<DiskBlock> stack;
+}
+class DiskBlock
+{
+	int node;
+	FreeStack nextFs;
+}

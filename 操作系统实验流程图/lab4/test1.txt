@@ -1,0 +1,67 @@
+package Test;
+
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+
+class FCB{
+	File f ;
+	FCB fcb ;
+}
+
+public class Test1 {
+	ArrayList<FCB> alFcb = new ArrayList<FCB>();
+	
+	void printfAllFile1(String URL){
+		File f = new File(URL);
+		String fileList[] = f.list();
+		for(int i=0;i<fileList.length;i++){
+			System.out.println(fileList[i]);
+			File fs = new File(URL+fileList[i]+"\\");
+			String fileListss[] = fs.list();
+			System.out.println("子目录");
+			if(fileListss != null){
+				for(int j=0;j<fileListss.length; j++)
+					System.out.println(fileListss[j]);
+			}
+			else
+				System.out.println("null");
+			System.out.println("------------------");
+		}
+	}
+	int count = 0;
+	void printfAllFile(String URL){
+		File f = new File(URL);
+		String fileList[] = f.list();
+		count ++ ;
+		if(count == 1){
+			//不画
+		}
+		if(count == 2){
+			//画一条 子目录
+			System.out.print("\t-");
+		}
+		if(count > 2){
+			//画竖线 + 横线
+			for(int j=0 ; j<count;j++)
+				System.out.println("\t|");
+			for(int j=0 ; j<count;j++)
+				System.out.print("\t-");
+		}
+		System.out.println(f.getName());
+		if(fileList != null){
+			for(int i=0;i<fileList.length; i++){
+				//将f接到fileList的每一个底下
+				printfAllFile(URL+fileList[i]+"\\");
+				count -- ;
+			}
+			System.out.println("一个目录完成");
+		}
+		else
+			return;
+	}
+	public static void main(String[] args) {
+		new Test1().printfAllFile("C://Documents and Settings//user//桌面//java//");
+	}
+}
